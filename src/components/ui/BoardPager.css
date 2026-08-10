@@ -1,0 +1,16 @@
+/* 게시판 페이저 — 데모에 없던 신규 컴포넌트라 별도 파일로 둔다(globals.css 는 데모 verbatim 유지).
+   색·라운드·호버는 데모 변수(--c-*, --line)를 그대로 써서 톤을 맞춘다. */
+.board-pager{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:32px;flex-wrap:wrap}
+.board-pager a,.board-pager span.gap{display:inline-flex;align-items:center;justify-content:center;
+  min-width:40px;height:40px;padding:0 8px;border:1px solid var(--line);border-radius:10px;
+  font-size:16px;font-weight:500;color:var(--ink-muted);background:#fff;
+  transition:background .2s,color .2s,border-color .2s}
+.board-pager a:hover{background:var(--c-50);color:var(--c-800);border-color:var(--c-500)}
+.board-pager a:focus-visible{outline:3px solid var(--c-500);outline-offset:2px}
+.board-pager a.on{background:var(--c-800);border-color:var(--c-800);color:#fff;font-weight:700;cursor:default}
+.board-pager span.gap{border:0;background:none;min-width:24px}
+.board-pager a.nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
+@media (max-width:640px){
+  /* 터치 타깃 44px */
+  .board-pager a,.board-pager span.gap{min-width:44px;height:44px;font-size:16.5px}
+}
