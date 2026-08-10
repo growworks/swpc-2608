@@ -15,6 +15,22 @@
 npm run dev
 ```
 
+## 배포 (Cloudflare Workers + OpenNext)
+
+skinnfood 등과 동일한 패턴. `npm run build` 가 OpenNext 워커 번들(.open-next/)을 만들고
+[wrangler.jsonc](wrangler.jsonc) 로 배포한다. ISR/fetch 캐시는 공유 R2 버킷
+`growworks-isr-cache`(prefix `swpc`)를 쓴다. 환경변수는 전부 비밀 아님 — wrangler vars 로 커밋.
+
+- 수동 배포: `npm run deploy` (build + deploy)
+- **깃 연동(Workers Builds)**: Cloudflare 대시보드 → Workers & Pages → Create →
+  Import a repository → `growworks/swpc-2608` 선택 후
+  Build command `npm run build` / Deploy command `npx opennextjs-cloudflare deploy`.
+  이후 main 푸시마다 자동 배포된다.
+- 커스텀 도메인: 배포된 swpc 워커 → Settings → Domains & Routes → `1479.cwc.or.kr` 추가.
+- 주의: 로컬 `npm run preview`(workerd)는 Windows 에서 기동이 불안정하다(OpenNext 공지 제약).
+  구성 검증은 `npx wrangler deploy --dry-run` 으로 한다. wrangler 는 로컬 Node 20 지원 상한인
+  **4.86.0 정확 핀**(4.87+는 Node 22 필수), next 는 OpenNext peer 요구로 **16.2.12**.
+
 환경변수는 `.env.example`를 복사해 `.env.local`로 쓴다.
 
 | 키 | 용도 |
