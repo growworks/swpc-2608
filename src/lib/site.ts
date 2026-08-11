@@ -1,5 +1,5 @@
 /** 사이트 전역 상수 — 기관 정보·연락처·도메인 (데모 확정 표기 기준) */
-export const SITE_URL = 'https://1479.cwc.or.kr'
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://coach.cwc.or.kr'
 export const ORG_NAME = '학교복지진흥사회적협동조합'
 export const ORG_NAME_EN = 'School Welfare Promotion Social Cooperative'
 

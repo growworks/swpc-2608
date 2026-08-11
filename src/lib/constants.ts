@@ -20,7 +20,7 @@ export const PUBLIC_API_BASE_URL =
 /**
  * 카카오맵 JavaScript 키 (오시는 길 지도).
  * JS 키는 브라우저에 노출되는 공개 키이며, 카카오 개발자 콘솔의 **사이트 도메인 등록**으로만
- * 보호된다 — localhost:3422 와 1479.cwc.or.kr 이 등록돼 있어야 지도가 뜬다.
+ * 보호된다 — localhost:3422 와 coach.cwc.or.kr 이 등록돼 있어야 지도가 뜬다.
  */
 export const KAKAO_MAP_KEY =
   process.env.NEXT_PUBLIC_KAKAO_MAP_KEY ?? 'b17dcccbfd909891fae73d3a6ae9514c'

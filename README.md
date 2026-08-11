@@ -3,7 +3,7 @@
 학교복지진흥사회적협동조합 공식 홈페이지 + 대문(학교복지×교원투데이 통합 랜딩).
 컨펌된 데모 2종을 Next.js 16(App Router) + ISR로 100% 이식하고, growworks 공개 API(`cwc` 테넌트)에 연동했다.
 
-- 도메인: https://1479.cwc.or.kr (학교 홈), https://1479.cwc.or.kr/intro (대문)
+- 도메인: https://coach.cwc.or.kr (학교 홈), https://coach.cwc.or.kr/intro (대문)
 - API 명세: `D:\projectClaude\growworks-web-admin\docs\api\openapi-cwc.yaml`
 - 원본 데모:
   - 학교: `(학교)클라이언트_전달용/index.html` (해시 라우팅 SPA 통합본)
@@ -15,21 +15,23 @@
 npm run dev
 ```
 
-## 배포 (Cloudflare Workers + OpenNext)
+## 배포 (Vercel)
 
-skinnfood 등과 동일한 패턴. `npm run build` 가 OpenNext 워커 번들(.open-next/)을 만들고
-[wrangler.jsonc](wrangler.jsonc) 로 배포한다. ISR/fetch 캐시는 공유 R2 버킷
-`growworks-isr-cache`(prefix `swpc`)를 쓴다. 환경변수는 전부 비밀 아님 — wrangler vars 로 커밋.
+도메인 존(cwc.or.kr)의 네임서버가 외부 DNS(DNSZi)에 있어 Cloudflare Workers 커스텀 도메인을
+쓸 수 없다(존이 Cloudflare 에 있어야 함). Vercel 은 외부 DNS 의 CNAME 레코드만으로
+커스텀 도메인·SSL 이 연결되므로 Vercel 로 배포한다.
+(이전 Cloudflare Workers + OpenNext 구성은 커밋 dbd0f3b 참조 — 존 이전 시 복원 가능.)
 
-- 수동 배포: `npm run deploy` (build + deploy)
-- **깃 연동(Workers Builds)**: Cloudflare 대시보드 → Workers & Pages → Create →
-  Import a repository → `growworks/swpc-2608` 선택 후
-  Build command `npm run build` / Deploy command `npx opennextjs-cloudflare deploy`.
+- **깃 연동**: Vercel 대시보드 → Add New… → Project → Import `growworks/swpc-2608`.
+  Framework 가 Next.js 로 자동 감지되므로 빌드 설정은 기본값 그대로 둔다.
   이후 main 푸시마다 자동 배포된다.
-- 커스텀 도메인: 배포된 swpc 워커 → Settings → Domains & Routes → `1479.cwc.or.kr` 추가.
-- 주의: 로컬 `npm run preview`(workerd)는 Windows 에서 기동이 불안정하다(OpenNext 공지 제약).
-  구성 검증은 `npx wrangler deploy --dry-run` 으로 한다. wrangler 는 로컬 Node 20 지원 상한인
-  **4.86.0 정확 핀**(4.87+는 Node 22 필수), next 는 OpenNext peer 요구로 **16.2.12**.
+- **환경변수**: 코드 기본값이 운영값과 동일해 대시보드 설정 없이 동작한다(.env.example 참고).
+  값을 바꿀 때만 Settings → Environment Variables 에 등록.
+- **커스텀 도메인**: 프로젝트 → Settings → Domains → `coach.cwc.or.kr` 추가 후,
+  DNSZi(cwc.or.kr DNS 관리)에 레코드 추가: `coach  CNAME  cname.vercel-dns.com`.
+  전파되면 SSL 인증서가 자동 발급된다.
+- **리전**: [vercel.json](vercel.json) `regions: ["icn1"]` — SSR/ISR 함수를 서울 리전에서 실행.
+- ISR/fetch 캐시는 Vercel 기본 인프라를 그대로 쓴다(별도 구성 없음).
 
 환경변수는 `.env.example`를 복사해 `.env.local`로 쓴다.
 
@@ -169,7 +171,7 @@ settings 주소를 지오코딩해 마커를 찍으므로 어드민에서 주소
 
 **카카오 개발자 콘솔에 웹 사이트 도메인 등록 필요**(developers.kakao.com → 앱 → 플랫폼 → Web).
 `http://localhost:3422` 등록 확인·지도 정상 동작 실측 완료(2026-08-11).
-**운영 배포 전 `https://1479.cwc.or.kr` 등록 필수.** 미등록 도메인은 401 `domain mismatched`.
+**운영 배포 전 `https://coach.cwc.or.kr` 등록 필수.** 미등록 도메인은 401 `domain mismatched`.
 
 ### 정책 페이지 · SEO / 구조화 데이터 (2026-08-11)
 
