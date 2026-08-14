@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getSettings } from '@/lib/api/settings'
 import { BIZ_INFO, NEWS_SITE_URL } from '@/lib/site'
+import { LogoMark } from '@/components/ui/LogoMark'
 
 const EXT_ARROW = (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
@@ -20,12 +21,7 @@ export async function Footer() {
         <div className="foot-grid">
           <div className="foot-info">
             <div className="foot-org">
-              <svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true">
-                <circle cx="20" cy="20" r="19" fill="#fff" opacity=".12" />
-                <path d="M20 9 L31 15 L20 21 L9 15 Z" fill="#fff" />
-                <path d="M13 19.5 V25 C13 27.5 16 29.5 20 29.5 C24 29.5 27 27.5 27 25 V19.5" fill="none" stroke="#9CC4E8" strokeWidth="2.4" strokeLinecap="round" />
-                <line x1="31" y1="15" x2="31" y2="23" stroke="#DD8A1E" strokeWidth="2.4" strokeLinecap="round" />
-              </svg>
+              <LogoMark size={30} />
               <strong>{settings.companyName}</strong>
             </div>
             <dl className="foot-dl">

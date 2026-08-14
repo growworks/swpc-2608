@@ -10,6 +10,7 @@ import { organizationLd, websiteLd } from '@/lib/seo'
 import { NEWS_SITE_URL, ORG_NAME } from '@/lib/site'
 import { IntroEffects } from './IntroEffects'
 import { FamilySelect } from './FamilySelect'
+import { LogoMark } from '@/components/ui/LogoMark'
 import './intro.css'
 
 /* 세그먼트 설정은 SWC 가 AST 로 정적 추출하므로 반드시 리터럴이어야 한다
@@ -411,12 +412,7 @@ export default async function IntroPage() {
             <Link href="/intro" className="footer-logo" aria-label="학교복지진흥사회적협동조합 · CWC교원투데이 홈">
               <div className="footer-logo-icon">
                 {/* 조합 홈페이지와 동일한 로고 마크 */}
-                <svg viewBox="0 0 40 40" aria-hidden="true">
-                  <circle cx="20" cy="20" r="19" fill="#16395C" />
-                  <path d="M20 9 L31 15 L20 21 L9 15 Z" fill="#fff" />
-                  <path d="M13 19.5 V25 C13 27.5 16 29.5 20 29.5 C24 29.5 27 27.5 27 25 V19.5" fill="none" stroke="#9CC4E8" strokeWidth="2.4" strokeLinecap="round" />
-                  <line x1="31" y1="15" x2="31" y2="23" stroke="#DD8A1E" strokeWidth="2.4" strokeLinecap="round" />
-                </svg>
+                <LogoMark />
               </div>
               <span className="footer-logo-text">학교복지진흥사회적협동조합·CWC교원투데이</span>
             </Link>

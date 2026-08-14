@@ -7,6 +7,7 @@ import { MENUS } from '@/lib/data/faqs'
 import type { PublicMember } from '@/lib/api/members'
 import { clearSession, getCachedMember, subscribeSession } from '@/lib/auth'
 import { showToast } from '@/lib/toast'
+import { LogoMark } from '@/components/ui/LogoMark'
 
 /** 데모 GNB — 상위 메뉴 href는 첫 하위 항목과 동일 */
 const GNB: [string, string][] = MENUS.map(([label, subs]) => [label, subs[0][1]])
@@ -59,12 +60,7 @@ export function Header() {
       <header className={`site-header${scrolled ? ' scrolled' : ''}`} id="siteHeader">
         <div className="container">
           <Link className="logo" href="/" aria-label="학교복지진흥사회적협동조합 홈">
-            <svg className="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
-              <circle cx="20" cy="20" r="19" fill="#16395C" />
-              <path d="M20 9 L31 15 L20 21 L9 15 Z" fill="#fff" />
-              <path d="M13 19.5 V25 C13 27.5 16 29.5 20 29.5 C24 29.5 27 27.5 27 25 V19.5" fill="none" stroke="#9CC4E8" strokeWidth="2.4" strokeLinecap="round" />
-              <line x1="31" y1="15" x2="31" y2="23" stroke="#DD8A1E" strokeWidth="2.4" strokeLinecap="round" />
-            </svg>
+            <LogoMark className="logo-mark" />
             <span className="logo-text">학교복지진흥사회적협동조합</span>
           </Link>
 
