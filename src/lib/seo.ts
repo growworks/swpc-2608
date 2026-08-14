@@ -46,7 +46,7 @@ export function organizationLd(s: SiteSettings) {
     name: s.companyName,
     alternateName: [ORG_NAME_EN, 'SWPC'],
     url: SITE_URL,
-    logo: `${SITE_URL}/favicon.svg`,
+    logo: `${SITE_URL}/logo.png`,
     description:
       '교육부 장관 인가 제33호 사회적협동조합. 학교와 지역이 함께, 한 아이도 놓치지 않는 학교복지를 만듭니다.',
     foundingDate: '2014-12-19',
