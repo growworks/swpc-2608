@@ -11,6 +11,7 @@ import { NEWS_SITE_URL, ORG_NAME } from '@/lib/site'
 import { IntroEffects } from './IntroEffects'
 import { FamilySelect } from './FamilySelect'
 import { LogoMark } from '@/components/ui/LogoMark'
+import { PolicyModal } from '@/components/ui/PolicyModal'
 import './intro.css'
 
 /* 세그먼트 설정은 SWC 가 AST 로 정적 추출하므로 반드시 리터럴이어야 한다
@@ -427,8 +428,10 @@ export default async function IntroPage() {
           <div className="footer-bottom">
             <div>
               <div className="footer-links">
-                <Link href="/terms">이용약관</Link>
-                <Link href="/privacy" className="highlight">개인정보처리방침</Link>
+                {/* 학교 푸터와 동일하게 좌클릭은 모달, 새 탭·검색엔진은 전문 페이지로 간다.
+                    이메일무단수집거부는 방침 안의 특정 절을 가리키므로 링크 그대로 둔다 */}
+                <PolicyModal kind="terms" href="/terms" label="이용약관" title="이용약관" />
+                <PolicyModal kind="privacy" href="/privacy" className="highlight" label="개인정보처리방침" title="개인정보처리방침" />
                 <Link href="/privacy#email-no-collect">이메일무단수집거부</Link>
                 {/* 조합원 관련 사항은 약관이 아닌 정관을 따른다 - 경영공시의 정관·인가증으로 연결 */}
                 <Link href="/report#report-docs">조합원약관</Link>

@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import { getSettings } from '@/lib/api/settings'
 import { BIZ_INFO, NEWS_SITE_URL } from '@/lib/site'
 import { LogoMark } from '@/components/ui/LogoMark'
+import { PolicyModal } from '@/components/ui/PolicyModal'
 
 const EXT_ARROW = (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
@@ -46,9 +46,10 @@ export async function Footer() {
             </div>
           </div>
         </div>
+        {/* 전문 페이지는 그대로 살아 있고(새 탭·검색엔진), 좌클릭만 모달로 받는다 */}
         <div className="foot-policy">
-          <Link className="privacy" href="/privacy">개인정보처리방침</Link>
-          <Link href="/terms">이용약관</Link>
+          <PolicyModal kind="privacy" className="privacy" href="/privacy" label="개인정보처리방침" title="개인정보처리방침" />
+          <PolicyModal kind="terms" href="/terms" label="이용약관" title="이용약관" />
           <span>개인정보 최소 수집 원칙을 지킵니다.</span>
         </div>
         <p className="foot-copy">© 2026 School Welfare Promotion Social Cooperative. All rights reserved.</p>

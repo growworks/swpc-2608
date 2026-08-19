@@ -1,0 +1,119 @@
+/* 약관 모달 - globals.css(데모 CSS verbatim)를 건드리지 않기 위해 별도 파일로 둔다.
+   색·라운드·그림자는 데모 변수를 그대로 쓴다. */
+
+.pm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 95; /* 라이트박스(90) 위, 헤더(50) 위 */
+  background: rgba(8, 18, 30, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 20px;
+  animation: pmFade 0.18s ease-out;
+}
+
+.pm-panel {
+  width: min(860px, 100%);
+  max-height: min(84vh, 900px);
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: pmRise 0.2s ease-out;
+}
+.pm-panel:focus { outline: none }
+
+.pm-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+  flex: none;
+}
+.pm-head h2 {
+  flex: 1;
+  min-width: 0;
+  font-size: 21px;
+  font-weight: 900;
+  color: var(--c-900);
+  letter-spacing: -0.02em;
+}
+.pm-close {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-muted);
+  transition: background 0.2s, color 0.2s;
+}
+.pm-close:hover { background: var(--c-50); color: var(--c-900) }
+.pm-close:focus-visible { outline: 3px solid var(--c-500); outline-offset: 2px }
+
+/* 본문은 .detail-body 를 그대로 얹어 페이지와 같은 타이포를 쓴다 */
+.pm-body {
+  overflow-y: auto;
+  padding: 22px 24px 26px;
+  -webkit-overflow-scrolling: touch;
+}
+.pm-body > :first-child { margin-top: 0 }
+
+.pm-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--line);
+  background: var(--c-50);
+  flex: none;
+}
+
+@keyframes pmFade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes pmRise { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: none } }
+@media (prefers-reduced-motion: reduce) {
+  .pm-overlay, .pm-panel { animation: none }
+}
+
+@media (max-width: 640px) {
+  .pm-overlay { padding: 0 }
+  .pm-panel { width: 100%; max-height: 100%; height: 100%; border-radius: 0 }
+  .pm-head { padding: 16px 18px }
+  .pm-head h2 { font-size: 19px }
+  .pm-body { padding: 18px 18px 22px }
+  .pm-foot { padding: 14px 18px }
+}
+
+/* ---------- 동의 줄 (후원 신청 폼) ----------
+   데모는 안내 문구까지 label 한 줄에 이어 붙여 좁은 폭에서 줄바꿈이 어색했다.
+   체크 문장과 안내 문구를 분리하고, 전문은 모달 링크로 뺀다. */
+.agree-line .agree-text { flex: 1; min-width: 0 }
+.agree-line .agree-text label { display: inline }
+.agree-sub {
+  margin-top: 5px;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+  word-break: keep-all;
+}
+.agree-more {
+  flex: none;
+  align-self: flex-start;
+  margin-top: 1px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--c-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.agree-more:hover { color: var(--c-800) }
+.agree-more:focus-visible { outline: 3px solid var(--c-500); outline-offset: 2px }
+
+.pm-loading { color: var(--ink-muted); padding: 8px 0 }

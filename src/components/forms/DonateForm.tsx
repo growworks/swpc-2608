@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { PolicyModal } from '@/components/ui/PolicyModal'
 import { errorMessage } from '@/lib/api/client'
 import { CONTACT_MAX, submitContact } from '@/lib/api/contact'
 import { formatPhone } from '@/lib/api/members'
@@ -254,9 +255,14 @@ export function DonateForm() {
         <div className="field"><label htmlFor="dnEmail">이메일 <span className="req">*</span></label>
           <input id="dnEmail" type="email" required autoComplete="email" maxLength={90} value={email} onChange={(e) => setEmail(e.target.value)} /></div>
         <div>
+          {/* 체크 문장과 수집 내역을 분리한다 — 한 줄로 이어 붙이면 좁은 폭에서 줄바꿈이 어색하다 */}
           <div className="agree-line">
             <input type="checkbox" id="dnAgree1" checked={agree1} onChange={(e) => setAgree1(e.target.checked)} />
-            <label htmlFor="dnAgree1">개인정보 수집·이용에 동의합니다. <span className="req-tag">(필수)</span> · 수집 항목: 이름·연락처·이메일(현금 후원 시 입금자명) / 목적: 후원 접수·확인 및 영수증 안내 / 보유: 관계 법령에 따른 기간</label>
+            <div className="agree-text">
+              <label htmlFor="dnAgree1">개인정보 수집·이용에 동의합니다. <span className="req-tag">(필수)</span></label>
+              <p className="agree-sub">수집 항목 이름·연락처·이메일(현금 후원 시 입금자명) · 목적 후원 접수·확인 및 영수증 안내 · 보유 관계 법령에 따른 기간</p>
+            </div>
+            <PolicyModal kind="privacy" className="agree-more" href="/privacy" label="전문 보기" title="개인정보처리방침" />
           </div>
           <div className="agree-line">
             <input type="checkbox" id="dnAgree2" checked={agree2} onChange={(e) => setAgree2(e.target.checked)} />
