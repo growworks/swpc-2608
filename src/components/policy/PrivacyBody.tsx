@@ -45,12 +45,16 @@ export function PrivacyBody() {
       <table className="info-table">
         <tbody>
           <tr>
-            <th scope="row">수탁 업체</th>
-            <td>그로우웍스</td>
+            <th scope="row">그로우웍스 (growworks.co.kr)</th>
+            <td>홈페이지 시스템 운영·유지관리, 회원·신청 데이터 보관</td>
           </tr>
           <tr>
-            <th scope="row">위탁 업무</th>
-            <td>홈페이지 시스템 운영, 데이터 보관</td>
+            <th scope="row">솔라피 (Solapi)</th>
+            <td>알림톡·문자메시지 발송</td>
+          </tr>
+          <tr>
+            <th scope="row">Amazon Web Services</th>
+            <td>이메일 발송</td>
           </tr>
         </tbody>
       </table>
@@ -67,9 +71,11 @@ export function PrivacyBody() {
       <h3>4. 쿠키 등 자동 수집 장치에 관한 사항</h3>
       <div className="notice-box">
         <ul>
-          <li>조합 홈페이지는 행태 추적용 쿠키를 사용하지 않습니다.</li>
-          <li>로그인 상태 유지를 위해 브라우저 저장소(localStorage)에 인증 토큰을 저장하며, 로그아웃 시 삭제됩니다.</li>
+          <li>조합 홈페이지는 광고·행태 분석을 위한 쿠키를 사용하지 않습니다.</li>
+          <li>로그인 상태를 유지하기 위해 브라우저 저장소(localStorage)에 인증 토큰과 화면 표시용 회원 기본 정보(이름·이메일·연락처)를 저장합니다.</li>
+          <li>이 정보는 로그아웃하면 즉시 삭제되며, 브라우저의 사이트 데이터 삭제 기능으로도 지울 수 있습니다. 저장을 원하지 않으시면 로그인하지 않고 홈페이지를 이용하실 수 있습니다.</li>
           <li>오시는 길 지도 표시를 위해 카카오맵 SDK를 불러오며, 이 과정에서 카카오에 접속 정보(IP 주소 등)가 전달될 수 있습니다.</li>
+          <li>글꼴·이미지 등 일부 자원을 국외 사업자(Google Fonts 등)에서 불러오며, 이 과정에서 접속 정보(IP 주소, 브라우저 정보)가 해당 사업자에게 전달될 수 있습니다.</li>
         </ul>
       </div>
 
