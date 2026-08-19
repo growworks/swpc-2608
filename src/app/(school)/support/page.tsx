@@ -114,8 +114,7 @@ export default async function SupportPage() {
           <div className="grid-3" style={{ maxWidth: 1200 }}>
             <div className="plain-card">
               <h3>개인정보처리방침</h3>
-              {/* 주민등록번호는 수집하지 않는다(방침 본문과 일치) - 기부금 영수증은 홈택스 전자 발급 */}
-              <p>최소 수집 원칙을 지킵니다. 회원가입·후원 신청 시 필요한 정보만 수집하며, 주민등록번호는 수집하지 않습니다.</p>
+              <p>최소 수집 원칙을 지킵니다. 회원가입·후원 신청에 필요한 정보만 받고, 목적을 이룬 뒤에는 지체 없이 파기합니다.</p>
               <Link className="biz-more" href="/privacy">자세히 보기 {ARROW}</Link>
             </div>
             <div className="plain-card">

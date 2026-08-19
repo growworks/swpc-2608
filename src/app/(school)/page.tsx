@@ -149,7 +149,7 @@ export default async function HomePage() {
               <li>{CHECK}계좌번호 원터치 복사로 간편한 입금</li>
               <li>{CHECK}홈택스 전자기부금영수증 발급 안내</li>
               <li>{CHECK}모금·활용 내역 연도별 공개 게시</li>
-              <li>{CHECK}주민등록번호는 영수증 신청 단계에서만 수집</li>
+              <li>{CHECK}이름·연락처·이메일만으로 간편 신청</li>
             </ul>
           </div>
           <div className="reveal">

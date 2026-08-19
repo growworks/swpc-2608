@@ -161,12 +161,6 @@ export default async function DonatePage() {
                 <li>기부일자·기부금액 등록, 구분 &quot;금전&quot; 선택 → 등록 → 신청</li>
               </ul>
             </div>
-            {/* 홈페이지는 주민등록번호를 일절 수집하지 않는다.
-                영수증 발급에 필요한 주민등록번호는 국세청 홈택스에서 처리되며 이 사이트를 거치지 않는다.
-                /privacy·/support 의 고지와 같은 내용이어야 한다 */}
-            <div className="notice-box" style={{ marginTop: 16, borderLeftColor: 'var(--accent)' }}>
-              <strong>개인정보 안내</strong> · 기부금 영수증은 국세청 홈택스 전자기부금영수증으로 발급되며, 그 과정에서 소득세법 제160조의3(기부금영수증 발급 명세 작성·보관 의무)에 근거해 수집된 주민등록번호는 목적 달성 시 파기합니다.
-            </div>
           </div>
         </div>
       </section>

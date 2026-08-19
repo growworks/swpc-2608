@@ -113,7 +113,7 @@ export function SignupClient() {
                 </div>
                 <div className="agree-line">
                   <input type="checkbox" className="ag-item ag-req" id="ag2" checked={ag2} onChange={(e) => setAg2(e.target.checked)} />
-                  <label htmlFor="ag2">개인정보 수집·이용 동의 <span className="req-tag">(필수)</span> · 수집 항목: 이름·이메일·연락처 (주민등록번호는 수집하지 않습니다)</label>
+                  <label htmlFor="ag2">개인정보 수집·이용 동의 <span className="req-tag">(필수)</span> · 수집 항목: 이름·이메일·연락처</label>
                 </div>
                 <div className="agree-line">
                   <input type="checkbox" className="ag-item" id="ag3" checked={ag3} onChange={(e) => setAg3(e.target.checked)} />

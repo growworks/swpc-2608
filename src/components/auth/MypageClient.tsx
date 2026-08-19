@@ -343,7 +343,7 @@ export function MypageClient() {
                   <div className="empty-note">기부금 영수증 발급 내역 조회 기능은 준비 중입니다. 영수증 발급은 042-931-1479로 문의해 주세요.</div>
                 </div>
                 <div className="notice-box" style={{ marginTop: 16 }}>
-                  <strong>안내</strong> · 영수증은 국세청 홈택스 전자기부금영수증으로 발급됩니다. 신청 후 담당자가 발급에 필요한 사항을 개별 안내드리며, 주민등록번호는 홈페이지에 저장하지 않습니다. 문의 042-931-1479
+                  <strong>안내</strong> · 영수증은 국세청 홈택스 전자기부금영수증으로 발급되며, 기부자가 홈택스에서 직접 신청합니다. 신청 절차는 후원안내 페이지에서 확인하실 수 있습니다. 문의 042-931-1479
                 </div>
               </div>
               <div className="my-sec">
