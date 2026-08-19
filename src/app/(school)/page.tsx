@@ -30,13 +30,13 @@ const RP_ARROW = (
 )
 
 /**
- * 홈 활동소식 카드 3건.
- * cwc 테넌트는 콘텐츠가 아직 0건이고, 조회 실패로 첫 화면 전체가 죽으면 안 되므로
- * 실패도 빈 목록으로 취급해 섹션의 빈 상태 UI로 흡수한다(getSettings 폴백과 같은 방침).
+ * 홈 활동소식 카드 4건 — .news-grid 가 2열이라 4건이어야 2×2 로 맞아떨어진다.
+ * 조회 실패로 첫 화면 전체가 죽으면 안 되므로 실패도 빈 목록으로 취급해
+ * 섹션의 빈 상태 UI 로 흡수한다(getSettings 폴백과 같은 방침).
  */
 async function homeActivities() {
   try {
-    return await getActivities(3)
+    return await getActivities(4)
   } catch {
     return []
   }
@@ -127,6 +127,11 @@ export default async function HomePage() {
           ) : (
             /* reveal 미부여 — 빈 상태는 JS 없이도 보여야 한다 */
             <div className="empty-note">등록된 활동소식이 없습니다.</div>
+          )}
+          {activities.length > 0 && (
+            <div className="reveal" style={{ textAlign: 'center', marginTop: 34 }}>
+              <Link className="btn btn-outline" href="/news#news-list">활동 소식 전체 보기</Link>
+            </div>
           )}
         </div>
       </section>

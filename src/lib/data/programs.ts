@@ -3,6 +3,17 @@
  * 기존 사이트(cwc.or.kr, 74/75~89) 게시 원문 요약. local: 조합 제공 사진.
  * 데모 대비 변경: 아카이브 경로 → /archive ASCII 경로, 해시 링크 → 실제 라우트.
  */
+/** 특징 항목 제목 옆에 붙는 실시간 상태 배지 (데모의 .live-badge) */
+export interface FeatBadge {
+  href: string
+  label: string
+  title: string
+  ariaLabel: string
+}
+
+/** [제목, 설명] 또는 [제목, 설명, 배지] */
+export type Feat = [string, string] | [string, string, FeatBadge]
+
 export interface Program {
   id: string
   name: string
@@ -14,7 +25,7 @@ export interface Program {
   photoCap: string
   d: string
   intro: string
-  feats: [string, string][]
+  feats: Feat[]
   extra?: string
   gallery?: [string, string][]
 }
@@ -27,8 +38,8 @@ export const PROGRAMS: Program[] = [
     local: '/archive/images/program-univ-group.jpg',
     hero: 'https://images.pexels.com/photos/289737/pexels-photo-289737.jpeg?auto=compress&cs=tinysrgb&w=1920',
     heroAlt: '책과 태블릿이 놓인 강의실 책상',
-    alt: '학위복을 입은 교육프로그램 수료생들의 단체 사진',
-    photoCap: '교육프로그램 수료식 단체 사진',
+    alt: '초일류 全人 경영자 특강에 참여한 수강생과 조합 임직원 단체 사진',
+    photoCap: '초일류 全人 경영자 특강 참여자 단체 사진',
     d: '교육부 제33호 인가 비영리 교육기관이 운영하는 열린 교육 체계입니다.',
     intro: `<p>학교복지진흥사회적협동조합은 <strong>교육부 제33호 인가를 받은 비영리 교육기관</strong>입니다. 사회 발전과 시민 의식 함양 등 건강한 사회활동을 위한 인문·교양·문화·예술 시민교육 등 다양한 공익교육 프로그램을 제공하며, 개인의 삶의 질 향상과 교양 증진을 돕습니다.</p>
   <p>비영리 대학은 <strong>성별·연령의 제한이 없으며</strong>, 학력 보완이 필요한 분을 위한 인간 중심의 전인교육과 문자 해득 교육 등 평생 학습 기회 확대를 통해 민주 시민의 역할과 책임을 다할 수 있도록 하는 교육기관입니다.</p>
@@ -36,8 +47,17 @@ export const PROGRAMS: Program[] = [
     feats: [
       ['열린 입학', '성별·연령 제한 없이 누구나 · 학력 보완, 문자 해득 교육, 전인교육으로 평생 학습 기회를 넓힙니다.'],
       ['공익 우선 운영', '이익을 분배하지 않는 비영리 운영으로 교육의 공공성을 지킵니다.'],
-      ['맞춤 진로·미래직업 훈련', '학생별 맞춤 진로와 미래 직업에 도움이 되는 교육프로그램을 전달합니다.'],
-      ['소셜캠퍼스 온 활용', '사회적기업을 위한 전국 18개 센터 공간을 대관해 꿈·취업·도전의 가치를 제시합니다.'],
+      ['맞춤 진로·미래직업 훈련', '청소년 자기 주도적개발 및 학생별 맞춤 진로와 미래 직업에 도움이 되는 교육프로그램을 전달합니다.'],
+      [
+        '소셜캠퍼스 온 활용',
+        '사회적기업을 위한 전국 18개 센터 공간을 대관해 꿈·취업·도전의 가치를 제시합니다.',
+        {
+          href: 'https://www.google.com/search?q=%EC%86%8C%EC%85%9C%EC%BA%A0%ED%8D%BC%EC%8A%A4+%EC%98%A8+%EC%A7%80%EA%B8%88+%EC%98%81%EC%97%85+%EC%A4%91&hl=ko&udm=1',
+          label: '지금 영업 중',
+          title: 'Google에서 소셜캠퍼스 온 실시간 영업 상태 보기',
+          ariaLabel: '소셜캠퍼스 온 실시간 영업 상태를 새 창에서 확인하기',
+        },
+      ],
     ],
     extra: `<h3 style="font-size:21.5px;font-weight:900;color:var(--c-900);margin:32px 0 16px">산하 비영리 대학·캠퍼스</h3>
   <div class="grid-3">

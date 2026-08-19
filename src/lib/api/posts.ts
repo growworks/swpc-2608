@@ -133,18 +133,36 @@ export function postFiles(post: Post): PostFile[] {
 
 /**
  * 활동소식 카드/상세용 메타.
- * field_3(이미지 설명)이 상세 figcaption 겸 img alt 로 쓰인다(데모의 item.alt 역할).
+ *
+ * `field_2` 는 **이미지 URL 배열**(`image[]`)이다 — 첫 장이 카드 썸네일 겸 상세 대표 사진이고,
+ * 나머지는 상세의 사진 뷰어에서 좌우로 넘겨 본다(데모의 local + gallery 를 합친 것과 같다).
+ * 배열 이전에 등록된 글은 문자열 1개로 들어 있을 수 있어 두 형태를 모두 받는다.
+ *
+ * field_3(이미지 설명)은 상세 figcaption 겸 img alt 로 쓰인다(데모의 item.alt 역할).
  * 설명이 비어 있으면 alt 는 제목으로 폴백하고 figcaption 은 생략한다.
+ * 사진이 여러 장이면 2번째부터는 데모처럼 "설명 2", "설명 3" 으로 번호를 붙인다.
  */
 export function activityMeta(post: Post) {
   const isActivity = post.category === CATEGORY.ACTIVITY
   const caption = isActivity ? str(post.custom, 'field_3') : null
+  const photos = isActivity ? imageList(post.custom, 'field_2') : []
+  const base = caption ?? post.title
+
   return {
     topic: isActivity ? str(post.custom, 'field_1') : null,
-    thumbnailUrl: isActivity ? str(post.custom, 'field_2') : null,
+    thumbnailUrl: photos[0] ?? null,
     caption,
-    thumbnailAlt: caption ?? post.title,
+    thumbnailAlt: base,
+    /** 상세 사진 뷰어용 [URL, 설명] 목록 — 사진이 없으면 빈 배열 */
+    photos: photos.map((url, i): [string, string] => [url, i === 0 ? base : `${base} ${i + 1}`]),
   }
+}
+
+/** `image[]` 값 읽기 — 문자열 1개로 저장된 구 데이터도 1장짜리 배열로 받아들인다 */
+function imageList(custom: Post['custom'], key: string): string[] {
+  const raw = custom?.[key]
+  const arr = Array.isArray(raw) ? raw : raw == null ? [] : [raw]
+  return arr.flatMap((v) => (typeof v === 'string' && v.trim() ? [v.trim()] : []))
 }
 
 /** 기부금공시 첨부 내역서 이미지 — `custom.field_1` = 이미지 URL 1장 */

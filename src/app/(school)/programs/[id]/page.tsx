@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { LiveBadge } from '@/components/ui/LiveBadge'
 import { getProgram, getPrograms } from '@/lib/api/content'
 import { abs, breadcrumbLd, WEBSITE_ID } from '@/lib/seo'
 
@@ -93,9 +94,13 @@ export default async function ProgramDetailPage({ params }: { params: Promise<{ 
           <div className="detail-body" data-html-body dangerouslySetInnerHTML={{ __html: program.intro }} />
           <h3 style={{ fontSize: 21.5, fontWeight: 900, color: 'var(--c-900)', margin: '32px 0 16px' }}>주요 내용</h3>
           <div className="grid-2">
-            {program.feats.map(([t, d]) => (
+            {program.feats.map(([t, d, badge]) => (
               <div className="plain-card" key={t}>
-                <h3 style={{ fontSize: 19 }}>{t}</h3>
+                {/* 배지가 붙는 제목은 줄바꿈되므로 데모처럼 flex-wrap 이 걸린 h3 를 그대로 쓴다 */}
+                <h3 style={{ fontSize: 19 }}>
+                  {t}
+                  {badge && <LiveBadge {...badge} />}
+                </h3>
                 <p>{d}</p>
               </div>
             ))}

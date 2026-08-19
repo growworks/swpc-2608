@@ -8,7 +8,7 @@ export const revalidate = 3600
 export const metadata: Metadata = {
   title: '참여하기',
   description:
-    '학교복지진흥사회적협동조합 조합원 가입(생산자·소비자·직원·후원자), 강사·자원봉사, 협력·제휴 안내. 가입 상담 042-931-1479.',
+    '학교복지진흥사회적협동조합 조합원 가입(생산자·소비자·직원·후원자·자원봉사), 강사·자원봉사, 협력·제휴 안내. 가입 상담 042-931-1479.',
   alternates: { canonical: '/join' },
 }
 
@@ -39,6 +39,7 @@ export default function JoinPage() {
             <div className="plain-card"><h3>소비자 조합원</h3><p>프로그램과 서비스를 이용하는 학생·학부모·교직원.</p></div>
             <div className="plain-card"><h3>직원 조합원</h3><p>조합 사무국·산하 기관에서 일하는 직원.</p></div>
             <div className="plain-card"><h3>후원자 조합원</h3><p>출자와 후원으로 조합의 공익 활동을 응원하는 개인·단체.</p></div>
+            <div className="plain-card"><h3>자원봉사 회원</h3><p>주도적으로 일손 돕기 및 운영 참여</p><p className="p-sub">단순 노무, 행정 사무지원, 재능기부 등</p></div>
           </div>
           <div style={{ maxWidth: 980 }}>
             <h3 style={{ fontSize: 21.5, fontWeight: 900, color: 'var(--c-900)', marginBottom: 14 }}>가입 절차</h3>
@@ -71,16 +72,16 @@ export default function JoinPage() {
         <div className="container">
           <div className="sec-head"><h2>협력·제휴</h2><p>학교·기관·기업과 함께 교육복지 협력망을 넓힙니다.</p></div>
           <div className="grid-3" style={{ maxWidth: 1200 }}>
-            <div className="plain-card"><h3>학교·교육기관</h3><p>프로그램 공동 운영, 방송·환경·보건 교육 지원, 진로체험처 제공 등 학교 연계 협력.</p></div>
+            <div className="plain-card"><h3>학교·교육기관</h3><p>창의성 증진 진로·학습 프로그램 공동 개발, 맞춤형 인재 양성, 학교 밖 안전한 돌봄 시스템 구축.</p></div>
             <div className="plain-card"><h3>공공기관·지자체</h3><p>학교복합시설·체육시설·청소년시설 등 위탁 운영 및 공동 사업 협력.</p></div>
-            <div className="plain-card"><h3>기업·단체</h3><p>후원·물품 지원·임직원 봉사 등 사회공헌 파트너십.</p></div>
+            <div className="plain-card"><h3>기업·단체</h3><p>기부금 후원, 환경 보호, 소외계층 지원 등의 캠페인 공동 진행 및 사회공헌 파트너십.</p></div>
           </div>
-          <h3 style={{ fontSize: 21.5, fontWeight: 900, color: 'var(--c-900)', margin: '48px 0 18px' }}>함께 만드는 사회공헌 파트너십의 4가지 가치</h3>
+          <h3 style={{ fontSize: 21.5, fontWeight: 900, color: 'var(--c-900)', margin: '48px 0 18px' }}>함께 만드는 건강증진 사회공헌 파트너십의 핵심 4가지 가치</h3>
           <div className="grid-2" style={{ maxWidth: 1200 }}>
-            <div className="plain-card"><h3>경영자 리더십</h3><p>기업 사회공헌에 대한 관심과 실천 의지, 솔선수범과 명확한 의사결정.</p></div>
-            <div className="plain-card"><h3>비즈니스 연관성</h3><p>기업의 업과 연관된 사회공헌 · 기업의 기술·전문인력을 활용해 기업활동에도 유익한 협력.</p></div>
-            <div className="plain-card"><h3>파트너십</h3><p>전문성과 실행력을 갖춘 파트너, 적절한 조직 규모, 함께 성장할 수 있는 관계.</p></div>
-            <div className="plain-card"><h3>임직원의 참여</h3><p>사회공헌을 권장하는 기업문화 속에서 임직원이 기술과 노하우로 참여하며 보람과 자긍심을 얻습니다.</p></div>
+            <div className="plain-card"><h3>건강형평성 제고</h3><p>의료 취약계층과 소외계층이 보건의료 서비스에서 배제되지 않도록 격차를 해소하고 보편적 건강권을 보장합니다.</p></div>
+            <div className="plain-card"><h3>지역사회 건강친화 공헌</h3><p>지역사회의 고유한 특성과 구체적인 현장 수요를 반영하여 일상 속 건강 증진 활동과 돌봄 인프라를 넓혀갑니다.</p></div>
+            <div className="plain-card"><h3>건강증진 거버넌스 구축·운영</h3><p>기업, 지자체, 전문기관 등 다자간 평등한 파트너십 체계를 만들어 일회성 기부가 아닌 전략적 협력 구조를 확립합니다.</p></div>
+            <div className="plain-card"><h3>지역자원 발굴·연계</h3><p>민간 기업이 가진 핵심 기술·인프라와 지역사회의 인적·물적 자원을 유기적으로 연결하여 사회적 가치를 극대화합니다.</p></div>
           </div>
         </div>
       </section>

@@ -6,6 +6,7 @@ import { ApiError } from '@/lib/api/client'
 import { getNewsDetail } from '@/lib/api/content'
 import { activityMeta, formatPostDate } from '@/lib/api/posts'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { PhotoViewer } from '@/components/sections/PhotoViewer'
 import { articleLd, breadcrumbLd, postDateISO, stripHtml } from '@/lib/seo'
 
 /* 상세 조회(GET /posts/{id})는 호출마다 viewCount 가 +1 된다 — ISR 로 굳히면 조회수가 멈춘다 */
@@ -108,20 +109,15 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
             <span className={`pill ${pill}`}>{pillLabel}</span>
             <h1>{post.title}</h1>
             <div className="detail-meta">
-              <span>게시일 {formatPostDate(post.createdAt)}</span>
+              {formatPostDate(post.createdAt) && <span>게시일 {formatPostDate(post.createdAt)}</span>}
               {/* 활동소식은 조회수 미노출 (데모도 활동소식엔 views 없음) — 공지사항만 표시 */}
               {isNotice && post.viewCount ? <span>조회 {post.viewCount}</span> : null}
               <span>학교복지진흥사회적협동조합</span>
             </div>
           </div>
-          {/* 데모 원본 마크업: figure.detail-img > img + figcaption(이미지 설명 = field_3) */}
-          {meta?.thumbnailUrl && (
-            <figure className="detail-img">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={meta.thumbnailUrl} alt={meta.thumbnailAlt} loading="lazy" />
-              {meta.caption && <figcaption>{meta.caption}</figcaption>}
-            </figure>
-          )}
+          {/* 활동소식 사진은 여러 장(field_2 = image[])이라 뷰어로 넘겨 본다.
+              1장뿐이면 뷰어가 화살표·썸네일 없이 사진과 설명만 보여준다 */}
+          {meta && meta.photos.length > 0 && <PhotoViewer photos={meta.photos} />}
           <div className="detail-body" data-html-body dangerouslySetInnerHTML={{ __html: post.content }} />
           <nav className="detail-nav">
             {next && (

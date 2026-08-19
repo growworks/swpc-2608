@@ -48,7 +48,7 @@ npm run dev
 | --- | --- | --- |
 | 소식 목록/상세 | `GET /cwc/posts?category=공지사항`·`활동소식` **각각 호출 + 서버 페이징**, `GET /cwc/posts/{id}` | 연동 완료 |
 | 투명공시 목록/상세 | `GET /cwc/posts?category=경영공시`·`기부금공시` **각각 호출 + 서버 페이징**, `GET /cwc/posts/{id}` | 연동 완료 |
-| 홈 활동소식 3건 / 대문 공지 4건 | `GET /cwc/posts?...&limit=N` | 연동 완료 |
+| 홈 활동소식 4건 / 대문 공지 4건 | `GET /cwc/posts?...&limit=N` | 연동 완료 |
 | 푸터·후원계좌·오시는 길 | `GET /cwc/settings` | 연동 완료 (폴백 있음) |
 | 후원 신청 | `POST /cwc/contact` (+로그인 시 Bearer → 회원 자동 연결) | 연동 완료, **실서버 E2E 검증** |
 | 마이페이지 후원 신청 내역 | `GET /cwc/my/contacts` (상태 배지 4종) | 연동 완료 — 단 CORS 미허용이라 `/api/my/contacts` 프록시 경유 |
@@ -70,15 +70,15 @@ openapi-cwc.yaml 은 아직 2단 컨벤션으로 기술돼 있으므로 서버 �
 
 | 카테고리 | 키 | 의미 |
 | --- | --- | --- |
-| 활동소식 | `field_1` (string) / `field_2` (image) / `field_3` (string) | 구분 배지 / 썸네일 / 이미지 설명 — field_3 이 상세 figcaption 겸 img alt (비면 alt=제목, figcaption 생략) |
+| 활동소식 | `field_1` (string) / `field_2` (**image[]**) / `field_3` (string) | 구분 배지 / **사진 목록(URL 문자열 배열)** / 이미지 설명 — `field_2[0]` 이 카드 썸네일 겸 상세 대표 사진, 2번째부터는 상세 사진 뷰어에서 넘겨 본다. field_3 은 대표 사진 기준 한 문장이고 2번째부터의 `설명 2`·`설명 3` 은 [activityMeta](src/lib/api/posts.ts)가 자동 생성한다 |
 | 경영공시 | `field_1` (file[]) | `{url, name, size바이트}` 배열 — 크기는 프론트에서 `215.9KB` 형식으로 포맷 |
 | 기부금공시 | `field_1` (image) | 첨부 내역서 1장 |
 
 ## 서버 실측 이슈 (2026-08-10 갱신)
 
-1. **cwc 테넌트 콘텐츠 0건** — `GET /cwc/posts` 는 200이지만 `{items:[], total:0}`.
-   게시글·카테고리(customSchema 포함) 시드가 서버 쪽에서 선행돼야 화면에 데이터가 나온다.
-   과거 게시일 보존을 위해 `createdAt` 지정 이관 필요(어드민 등록 시 이관 당일로 고정됨).
+1. ~~cwc 테넌트 콘텐츠 0건~~ → **활동소식 이관 완료**(2026-08-20, 아래 "활동소식 콘텐츠 이관" 참고).
+   어드민 등록은 게시일이 등록 당일로 고정되므로 과거 게시일은 `createdAt` 을 지정하는
+   DB 직결 시드로만 보존된다. 공지사항·공시는 어드민 입력분을 그대로 쓴다.
 2. **`/cwc/settings` 빈 객체** — 어드민 미입력 상태라 프론트 폴백(데모 확정값)이 표시된다.
    어드민은 비운 항목을 `""` 로 저장하므로 폴백은 값 유무(`||` 상당)로 처리돼 있다.
 3. ~~`/cwc/members/*` 미배포~~ → **배포 완료**(2026-08-10 실측). 에러 코드도 명세대로
@@ -113,8 +113,8 @@ src/
     robots.ts, sitemap.ts
   components/
     layout/   Shell, Header, Footer(settings), MobileBar(settings), ClientEffects, Lightbox, Toast
-    ui/       Tabbar
-    sections/ HeroSlider, NewsCard, FaqAccordion
+    ui/       Tabbar, BoardPager(데모 .pg-* 규격), LiveBadge
+    sections/ HeroSlider, NewsCard, FaqAccordion, KakaoMap, PhotoViewer(활동소식 사진 뷰어)
     forms/    DonateForm(contact API)
     auth/     LoginClient, SignupClient, MypageClient, ResetPasswordClient
   lib/
@@ -188,12 +188,34 @@ settings 주소를 지오코딩해 마커를 찍으므로 어드민에서 주소
   sitemap 에 /privacy·/terms 추가, lastmod=날짜부만. robots 는 /api/ 만 차단
   (noindex 페이지는 robots 로 막지 않아야 크롤러가 noindex 를 읽는다).
 
+## 데모 개정본 반영 (2026-08-20)
+
+기준 데모가 **2026-08-19 개정본**(3,243행)으로 바뀌어 아래를 이식했다. 고객 수정요청(PPTX) 반영분이다.
+
+| 반영 | 내용 |
+| --- | --- |
+| CSS | `globals.css` 를 개정본 `<style>` 에서 재생성 — 치환 17곳(`body:not(.home)`→`.school-shell:not(.is-home)` 8, `body.p-*` 6, 이미지 경로 3)뿐이라 [rebuild 스크립트](scripts/)로 통째 갱신하는 편이 안전하다 |
+| 연혁 | 단문 6줄 → 연도 9개·81줄 태그 표 ([history.ts](src/lib/data/history.ts), 데모에서 자동 추출). 최신순 정렬, `.hist-grid` 1컬럼 |
+| 인사말 | 우측 사진이 3장 콜라주(`.greet-collage`)로 교체 + 캡션 신설, 이사장 사진 교체, 제목이 본문 컬럼 안으로 이동 |
+| 참여하기 | 조합원 카드 5장(자원봉사 회원 추가), 협력·제휴 문구·4가치 카드 전면 교체 |
+| 교육프로그램 | 비영리 대학 사진·문구 교체 + '지금 영업 중' [라이브 배지](src/components/ui/LiveBadge.tsx) |
+| 홈 | 활동소식 3건 → 4건(2×2), "활동 소식 전체 보기" 버튼 추가 |
+| 소식 상세 | 단일 사진 → [사진 뷰어](src/components/sections/PhotoViewer.tsx) (화살표·썸네일·키보드, 클릭 시 라이트박스 1.5배) |
+| 페이저 | 데모 `.pg-*` 규격으로 교체 — 전체 건수 표시, 양 끝 화살표 자리 유지, 모바일에서 숫자 숨김 |
+| 자산 | 신규 5장 반입, 콜라주로 대체된 `activity-collage.jpg` 제거 |
+
+데모 자체의 미확정 항목(그대로 남김): 설립인가 연도 표기가 인사말은 "2015년", 연혁·공시는 "2014.12.19" 로 어긋난다.
+
 ## 데모 대비 의도적 변경
 
 UI 는 100% 보존이 원칙이나, API 계약상 불가피하게 달라진 항목이다.
 
 | 항목 | 변경 | 사유 |
 | --- | --- | --- |
+| 활동소식 사진 | `field_2` 를 image[] 로 운용 | 데모의 대표사진+갤러리를 한 배열로 담는다. 기존 문자열 값도 읽도록 파서가 두 형태를 모두 받는다 |
+| 페이저 표시 조건 | 1페이지면 숨김 | 데모는 활동소식에만 페이저를 뒀는데 이 사이트는 네 게시판 모두 서버 페이징이라, 항상 그리면 데모에 없던 페이저가 공지·공시에 늘 뜬다 |
+| 라이브 배지 링크 | 구글 세션 토큰 제거 | 데모 href 에 붙은 `sxsrf` 타임스탬프·`ved`·`uds` 는 만료되므로 질의 URL 만 남겼다 |
+| 게시일 빈 값 | 요소째 생략 | 날짜를 못 읽으면 빈 `<p>` 가 남아 카드 높이가 어긋난다(데모와 동일 동작) |
 | 회원가입 단계 | 4단계 → 3단계 (이메일 인증 제거) | 서버에 인증 발송·검증 API 없음 |
 | 로그인 5회 실패 잠금 | 제거 | 서버에 실패 카운트 없음 (IP rate limit 만 존재) |
 | 로그인 데모 계정 안내 박스 | 제거 | 실서비스 계정이 아님 |
@@ -216,3 +238,28 @@ UI 는 100% 보존이 원칙이나, API 계약상 불가피하게 달라진 항�
 4. 어드민: `settings` 값 입력 (미입력 시 프론트 폴백으로 동작) + 테스트 문의 1건(이름 "프론트연동테스트") 삭제
 5. 콘텐츠 입고 후 확인: 상세 1회 열람 시 `viewCount` 가 +1 만 되는지, 썸네일·공시 첨부 렌더
 6. 기부금 영수증 리소스 신설 시 마이페이지 영수증 섹션 복구 (`RECEIPT_COUNT` 자리)
+
+## 활동소식 콘텐츠 이관
+
+데모 개정본의 활동소식 21건·사진 38장을 운영 DB 로 옮기는 절차다.
+어드민 UI 로는 과거 게시일을 지정할 수 없어(등록 당일로 고정) prdokdo 와 같은 **DB 직결 + S3 직접 업로드** 방식을 쓴다.
+
+```bash
+node scripts/export-activity-seed.mjs
+```
+
+위 명령이 데모 HTML 에서 `scripts/activity-seed.json` 을 만든다. 이어서 growworks-web-admin 레포에서:
+
+```bash
+pnpm --filter @workspace/scripts run seed-cwc-activity -- --dry
+```
+
+`--dry` 로 계획을 확인한 뒤 플래그 없이 다시 실행하면 반영된다.
+스크립트가 하는 일은 ①활동소식 카테고리의 `field_2` 를 image[] 로 승격(이미 배열이면 건너뜀)
+②기존 글의 문자열 `field_2` 를 1원소 배열로 변환(안 하면 어드민 재저장 시 400)
+③제목 기준 upsert(사진은 원본+webp 를 S3 에 올려 URL 배열로 저장)이다.
+
+**날짜 미상 10건은 기본적으로 보류된다.** 데모는 날짜를 모르는 활동에 날짜를 아예 표시하지 않는데,
+운영 DB 는 `createdAt` 이 반드시 있어 화면에 어떤 날짜든 찍힌다. 임의 날짜를 넣으면 사실과 다른
+게시일이 공개되므로, 조합에서 날짜를 받아 `activity-seed.json` 의 `date` 를 채운 뒤 재실행하는 것이
+기본 경로다. 그래도 먼저 올려야 하면 `--include-undated` 를 쓴다(게시일은 실행일로 기록됨).

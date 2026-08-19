@@ -8,6 +8,8 @@ import { activityMeta, formatPostDate, type Post } from '@/lib/api/posts'
  */
 export function NewsCard({ post }: { post: Post }) {
   const { topic, thumbnailUrl, thumbnailAlt } = activityMeta(post)
+  /* 날짜를 못 읽으면 빈 <p> 가 남아 카드 높이가 어긋난다 — 데모처럼 요소째 생략 */
+  const date = formatPostDate(post.createdAt)
 
   return (
     <Link className="news-card" href={`/news/${post.id}`}>
@@ -20,7 +22,7 @@ export function NewsCard({ post }: { post: Post }) {
       <div className="news-body">
         {topic && <span className="news-cat">{topic}</span>}
         <h3>{post.title}</h3>
-        <p className="news-date">{formatPostDate(post.createdAt)}</p>
+        {date && <p className="news-date">{date}</p>}
       </div>
     </Link>
   )

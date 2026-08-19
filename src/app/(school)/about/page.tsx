@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Tabbar } from '@/components/ui/Tabbar'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbLd } from '@/lib/seo'
+import { HISTORY } from '@/lib/data/history'
 
 export const revalidate = 3600
 
@@ -34,9 +35,10 @@ export default function AboutPage() {
 
       <section className="sub-section" id="about-greeting">
         <div className="container">
-          <div className="sec-head"><h2>인사말</h2></div>
           <div className="greet-grid">
             <div className="greet-body">
+              {/* 데모 개정본에서 제목이 그리드 바깥 → 본문 컬럼 안쪽으로 이동했다 */}
+              <div className="sec-head"><h2>인사말</h2></div>
               <p><strong>안녕하십니까?</strong><br />교육과 학교복지를 위한 사회적협동조합 홈페이지 방문을 진심으로 환영합니다.</p>
               <p>우리 조합기관은 2015년 「사회적협동조합법」에 의거 교육부 장관 제33호 인가를 받아 교육과 학교복지에 이바지하는 사회적협동조합 기관입니다.</p>
               <p>교육은 국가의 백년대계이자 대한민국의 미래 운명을 좌우할 만큼 중요합니다. 또한 교육은 교육 부문에 국한되지 않고 다양한 사회 모든 부분과 연계되어야 하고, 함께 협업해야 미래 교육이 바로 설 수 있다고 봅니다.</p>
@@ -54,13 +56,23 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="greet-side">
-              <figure className="greet-photo">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/archive/images/activity-collage.jpg" style={{ aspectRatio: 'auto' }} alt="학생조합원의 날 캠프, 건강 상담 등 조합 활동 사진 모음" loading="lazy" />
+              {/* 가로 사진 2장 위에 원형으로 오려낸 사진 1장을 겹치는 콜라주 (데모 개정본) */}
+              <figure className="greet-photo greet-collage">
+                <div className="gc-stack">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/archive/images/greet-career.jpg" alt="청소년 진로체험 기자단 활동에 참여한 학생들과 조합 임원 단체사진" loading="lazy" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/archive/images/greet-dinner.jpg" alt="유소년축구단 선수와 학부모가 함께한 단체 식사 현장" loading="lazy" />
+                  <span className="gc-oval">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/archive/images/greet-orchestra.jpg" alt="서울역 광장 청소년 3.1절 기념행사 청소년 오케스트라 공연" loading="lazy" />
+                  </span>
+                </div>
+                <figcaption className="gc-cap">공익적 · 사회적 가치를 위해 긍정 에너지를 전파하는<b>학교복지진흥사회적협동조합</b></figcaption>
               </figure>
               <figure className="greet-photo" style={{ marginTop: 22 }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/archive/images/chairman.jpg" style={{ aspectRatio: 'auto', width: '66.7%', display: 'block', margin: '20px auto 0' }} alt="학교복지진흥사회적협동조합 김재호 이사장" loading="lazy" />
+                <img src="/archive/images/chairman.jpg" style={{ aspectRatio: '1000/1125', objectFit: 'cover', objectPosition: '50% 40%', width: '100%', display: 'block' }} alt="학교복지진흥사회적협동조합 김재호 이사장" loading="lazy" />
                 <figcaption style={{ fontSize: 16, fontWeight: 700, color: 'var(--c-900)', padding: 12, textAlign: 'center', background: '#fff' }}>김재호 이사장</figcaption>
               </figure>
             </div>
@@ -73,14 +85,22 @@ export default function AboutPage() {
           <div className="sec-head"><h2>연혁</h2><p>조합이 걸어온 발자취입니다.</p></div>
           <div className="hist-grid">
             <div className="timeline">
-              <div className="tl-item"><div className="tl-year">2014</div><p>「협동조합기본법」 제85조제1항에 따라 사회적협동조합 설립인가 · 교육부장관 인가번호 제33호 (12.19, 설립인가증 기준)</p></div>
-              <div className="tl-item"><div className="tl-year">2015</div><p>법인 개업 · 사업자등록(면세법인·본점, 1.26)</p></div>
-              <div className="tl-item"><div className="tl-year">2021</div><p>지점 사업자등록 (12.1)</p></div>
-              <div className="tl-item"><div className="tl-year">2023</div><p>인터넷신문 「CWC교원투데이」 등록(대전 아00480, 12.19) 및 발행 개시</p></div>
-              <div className="tl-item"><div className="tl-year">2024~25</div><p>경영공시·기부금공시 게시 개시(2024.11) · 제11회 정기총회(2025.3.12, 2024년 결산)</p></div>
-              <div className="tl-item"><div className="tl-year">2026</div><p>2025년 결산 보고(5.29) · 독립 기관 홈페이지 구축 (본 사이트)</p></div>
+              {HISTORY.map((h) => (
+                <div className="tl-item" key={h.year}>
+                  <div className="tl-year">{h.year}</div>
+                  <div className="tl-rows">
+                    {h.rows.map(([tag, txt], i) => (
+                      <div className="tl-row" key={`${tag}-${i}`}>
+                        <span className="tl-tag">{tag}</span>
+                        <span className="tl-txt">{txt}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="pzl-wrap" style={{ alignSelf: 'center' }}>
+            {/* 데모 개정본에서 연혁이 1컬럼이 되며 퍼즐 블록이 아래로 내려가고 구분선이 생겼다 */}
+            <div className="pzl-wrap" style={{ borderTop: '1px solid var(--line)', paddingTop: 52 }}>
               <div className="pzl-side">
                 <div><h3>경영자 리더십</h3><p>기업사회공헌에 대한 관심과 실천의지, 솔선수범, 명확한 의사결정</p></div>
                 <div><h3>파트너십</h3><p>전문성과 실행력을 갖춘 파트너, 적절한 조직규모, 함께 성장할 수 있는 파트너</p></div>
