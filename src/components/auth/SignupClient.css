@@ -1,0 +1,23 @@
+/* 회원가입 한 화면 구성 - globals.css(데모 CSS verbatim)를 건드리지 않기 위해 별도 파일.
+   색·간격은 데모 변수를 그대로 쓴다. */
+
+/* 카드 안의 구역 제목 (정보 입력 / 약관 동의) */
+.auth-card .auth-sec {
+  margin: 30px 0 14px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--line);
+  font-size: 18.5px;
+  font-weight: 900;
+  color: var(--c-900);
+  letter-spacing: -0.02em;
+}
+/* 첫 구역은 부제 바로 아래라 위 여백을 줄인다 */
+.auth-card .form > .auth-sec:first-child { margin-top: 20px }
+
+/* 약관 블록이 제출 버튼과 붙지 않도록 */
+.auth-card .agree-line + .form-msg { margin-top: 16px }
+.auth-card .agree-line:last-of-type { margin-bottom: 6px }
+
+@media (max-width: 640px) {
+  .auth-card .auth-sec { margin: 24px 0 12px; font-size: 17.5px }
+}
