@@ -52,7 +52,8 @@ export const PROGRAMS: Program[] = [
         '소셜캠퍼스 온 활용',
         '사회적기업을 위한 전국 18개 센터 공간을 대관해 꿈·취업·도전의 가치를 제시합니다.',
         {
-          href: 'https://www.google.com/search?q=%EC%86%8C%EC%85%9C%EC%BA%A0%ED%8D%BC%EC%8A%A4+%EC%98%A8+%EC%A7%80%EA%B8%88+%EC%98%81%EC%97%85+%EC%A4%91&hl=ko&udm=1',
+          /* 검색어는 기관명만 — '지금 영업 중' 같은 상태어를 붙이면 결과가 엉뚱해진다 */
+          href: 'https://www.google.com/search?q=%EC%86%8C%EC%85%9C%EC%BA%A0%ED%8D%BC%EC%8A%A4+%EC%98%A8&hl=ko&udm=1',
           label: '지금 영업 중',
           title: 'Google에서 소셜캠퍼스 온 실시간 영업 상태 보기',
           ariaLabel: '소셜캠퍼스 온 실시간 영업 상태를 새 창에서 확인하기',
